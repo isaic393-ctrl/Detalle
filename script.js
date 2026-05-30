@@ -9,27 +9,25 @@
     return Math.round(Math.random() * (max - min)) + min;
   }
 
-  // Permite conseguir posiciones repartidas a lo largo de TODA la pantalla (del 5% al 90% del ancho)
   function getSafeSafeHorizontalPos() {
     let intentos = 0;
     let posValida = false;
     let nuevaPos = 0;
 
     while (!posValida && intentos < 50) {
-      nuevaPos = getRandomArbitrary(5, 90); // Rango ampliado para ocupar más pantalla
+      nuevaPos = getRandomArbitrary(5, 85); // Abarca desde el 5% al 85% de la pantalla
       posValida = true;
       intentos++;
 
-      // Tolerancia de separación para evitar que se encimen demasiado
       for (let i = 0; i < globalPositions.length; i++) {
-        if (nuevaPos > globalPositions[i] - 15 && nuevaPos < globalPositions[i] + 15) {
+        if (nuevaPos > globalPositions[i] - 18 && nuevaPos < globalPositions[i] + 18) {
           posValida = false;
           break;
         }
       }
     }
     
-    if (globalPositions.length > 6) {
+    if (globalPositions.length > 5) {
       globalPositions.shift(); 
     }
 
@@ -63,13 +61,11 @@
     let esCelular = window.innerWidth <= 600;
     
     if (esCelular) {
-      // Ajuste de tamaño equilibrado para abarcar el ancho móvil
-      let dimCel = getRandomArbitrary(45, 65);
+      let dimCel = getRandomArbitrary(55, 75);
       flwr.style.width = `${dimCel}vw`;
       flwr.style.height = `${dimCel}vw`;
       flwr.style.zIndex = Math.round(100 - dimCel);
     } else {
-      // Ajuste de tamaño en PC para que no salgan gigantescos y llenen armónicamente la pantalla
       let dimPC = getRandomArbitrary(35, 50);
       flwr.style.width = `${dimPC}vmin`;
       flwr.style.height = `${dimPC}vmin`;
@@ -81,8 +77,7 @@
   };
 
   const growInitialGarden = () => {
-    // CORREGIDO: Coordenadas iniciales bien distribuidas de izquierda a derecha (10%, 35%, 60%, 85%)
-    let initialPositions = [10, 35, 60, 85]; 
+    let initialPositions = [10, 35, 60, 85]; // Perfectamente distribuidos de lado a lado
     
     initialPositions.forEach((pos) => {
       globalPositions.push(pos);
