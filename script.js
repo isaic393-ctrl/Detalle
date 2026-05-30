@@ -3,35 +3,31 @@
   const contentGarden = document.getElementById('content-garden');
   let gardenActive = false;
   
-  // Guardaremos las posiciones ocupadas para evitar amontonamientos
   let globalPositions = [];
 
   function getRandomArbitrary(min, max) {
     return Math.round(Math.random() * (max - min)) + min;
   }
 
-  // Genera una posición horizontal cuidando que no esté cerca de otra
   function getSafeSafeHorizontalPos() {
     let intentos = 0;
     let posValida = false;
     let nuevaPos = 0;
 
     while (!posValida && intentos < 50) {
-      nuevaPos = getRandomArbitrary(8, 82); // Ajustado para que no se corten en bordes
+      nuevaPos = getRandomArbitrary(8, 80);
       posValida = true;
       intentos++;
 
-      // Revisa que esté lejos de CUALQUIER flor ya existente en pantalla
       for (let i = 0; i < globalPositions.length; i++) {
-        if (nuevaPos > globalPositions[i] - 18 && nuevaPos < globalPositions[i] + 18) {
-          posValida = false; // Muy cerca, rechazada
+        if (nuevaPos > globalPositions[i] - 22 && nuevaPos < globalPositions[i] + 22) {
+          posValida = false;
           break;
         }
       }
     }
     
-    // Si la pantalla ya está muy llena, limpia el historial para permitir clics infinitos
-    if (globalPositions.length > 6) {
+    if (globalPositions.length > 5) {
       globalPositions.shift(); 
     }
 
@@ -41,9 +37,6 @@
 
   const createSingleFlower = (forcedLeft = null) => {
     let flwr = document.createElement('div');
-    
-    // Girasoles un poco más estilizados y menos gigantescos para evitar colisiones visuales
-    let dim = getRandomArbitrary(40, 65); 
     let leftPos = forcedLeft !== null ? forcedLeft : getSafeSafeHorizontalPos();
 
     flwr.classList.add('sunflwr');
@@ -64,16 +57,24 @@
                       <div class="sunflwr__pedal--11"></div>
                       <div class="sunflwr__pedal--12"></div>`;
     flwr.style.left = `${leftPos}vw`;
-    flwr.style.height = `${dim}vmin`;
-    flwr.style.width = `${dim}vmin`;
+    
+    // 📊 NUEVA FÓRMULA DE ALTURA Y TAMAÑO DINÁMICO
+    let esCelular = window.innerWidth <= 600;
+    
+    // Incrementamos los rangos para que sean más grandes y notorios
+    let dim = esCelular ? getRandomArbitrary(50, 75) : getRandomArbitrary(45, 70);
+    
+    // Aplicamos la variación de escala al contenedor de la flor
+    flwr.style.width = esCelular ? `${dim}vw` : `${dim}vmin`;
+    flwr.style.height = esCelular ? `${dim}vw` : `${dim}vmin`;
+    
+    // El girasol más grande se dibuja al fondo (Z-Index) para dar profundidad de jardín
     flwr.style.zIndex = Math.round(100 - dim);
-    flwr.style.filter = `saturate(${getRandomArbitrary(90, 100)}%) brightness(${getRandomArbitrary(95, 120)}%)`;
+    flwr.style.filter = `saturate(${getRandomArbitrary(95, 100)}%) brightness(${getRandomArbitrary(95, 115)}%)`;
     document.body.appendChild(flwr);
   };
 
-  // Genera las primeras 4 flores bien espaciadas en la primera tanda
   const growInitialGarden = () => {
-    // Posiciones balanceadas fijas a lo ancho de la pantalla para el arranque perfecto
     let initialPositions = [12, 35, 58, 80]; 
     
     initialPositions.forEach((pos) => {
@@ -87,7 +88,6 @@
     });
   };
 
-  // Acción del botón principal
   startBtn.addEventListener('click', (e) => {
     e.stopPropagation(); 
     
@@ -101,7 +101,6 @@
     gardenActive = true; 
   });
 
-  // Toques infinitos en la pantalla
   document.body.addEventListener('click', () => {
     if (gardenActive) {
       createSingleFlower(); 
