@@ -195,16 +195,17 @@ body {
   background-color: #d8ff33;
 }
 
-/* 📱 OPTIMIZACIÓN DE DISEÑO AUTOMÁTICO PARA CELULARES */
+/* 📱 AJUSTES ESPECIALES PARA CELULARES */
 @media (max-width: 600px) {
   .fade-in-text {
-    font-size: 24px !important; /* Ajusta el poema para que no se salga de la pantalla */
-    top: 12vh !important;       /* Deja un buen espacio superior libre */
-    padding: 0 20px;            /* Evita que las letras peguen en las orillas */
+    font-size: 24px !important; 
+    top: 12vh !important;       
+    padding: 0 20px;            
     line-height: 1.4;
   }
+  
   .sunflwr {
-    width: 70vw !important;     /* Modifica ligeramente el tamaño en móvil para que luzca perfecto */
-    height: 70vw !important;
+    bottom: 2vh !important; /* Mantiene fijas las flores dentro del pasto en móvil */
   }
 }
+
