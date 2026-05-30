@@ -40,13 +40,6 @@
     let leftPos = forcedLeft !== null ? forcedLeft : getSafeSafeHorizontalPos();
 
     flwr.classList.add('sunflwr');
-    
-    // Decidir aleatoriamente si sale de arriba o de abajo
-    let esArriba = Math.random() > 0.5;
-    if (esArriba) {
-      flwr.classList.add('sunflwr--top');
-    }
-
     flwr.innerHTML = `<div class="sunflwr__leaf--left"></div>
                       <div class="sunflwr__leaf--right"></div>
                       <div class="sunflwr__stem"></div>
@@ -65,14 +58,17 @@
                       <div class="sunflwr__pedal--12"></div>`;
     flwr.style.left = `${leftPos}vw`;
     
+    // 📊 ALTURA MÁXIMA EN CELULARES TOTALMENTE INCREMENTADA
     let esCelular = window.innerWidth <= 600;
     
     if (esCelular) {
+      // En celular usamos un rango mucho más alto y variado (de 65% a 90% del ancho de pantalla)
       let dimCel = getRandomArbitrary(65, 90);
       flwr.style.width = `${dimCel}vw`;
       flwr.style.height = `${dimCel}vw`;
       flwr.style.zIndex = Math.round(100 - dimCel);
     } else {
+      // En computadoras se mantiene el rango estético previo
       let dimPC = getRandomArbitrary(45, 70);
       flwr.style.width = `${dimPC}vmin`;
       flwr.style.height = `${dimPC}vmin`;
@@ -97,9 +93,7 @@
     });
   };
 
-  // Ajustado para asegurar que responda al clic en cualquier pantalla
   startBtn.addEventListener('click', (e) => {
-    e.preventDefault();
     e.stopPropagation(); 
     
     startBtn.classList.add('hidden'); 
