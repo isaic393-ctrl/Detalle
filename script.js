@@ -3,31 +3,35 @@
   const contentGarden = document.getElementById('content-garden');
   let gardenActive = false;
   
+  // Guardaremos las posiciones ocupadas para evitar amontonamientos
   let globalPositions = [];
 
   function getRandomArbitrary(min, max) {
     return Math.round(Math.random() * (max - min)) + min;
   }
 
+  // Genera una posición horizontal cuidando que no esté cerca de otra
   function getSafeSafeHorizontalPos() {
     let intentos = 0;
     let posValida = false;
     let nuevaPos = 0;
 
     while (!posValida && intentos < 50) {
-      nuevaPos = getRandomArbitrary(5, 85); // Abarca desde el 5% al 85% de la pantalla
+      nuevaPos = getRandomArbitrary(8, 82); // Ajustado para que no se corten en bordes
       posValida = true;
       intentos++;
 
+      // Revisa que esté lejos de CUALQUIER flor ya existente en pantalla
       for (let i = 0; i < globalPositions.length; i++) {
         if (nuevaPos > globalPositions[i] - 18 && nuevaPos < globalPositions[i] + 18) {
-          posValida = false;
+          posValida = false; // Muy cerca, rechazada
           break;
         }
       }
     }
     
-    if (globalPositions.length > 5) {
+    // Si la pantalla ya está muy llena, limpia el historial para permitir clics infinitos
+    if (globalPositions.length > 6) {
       globalPositions.shift(); 
     }
 
@@ -37,6 +41,9 @@
 
   const createSingleFlower = (forcedLeft = null) => {
     let flwr = document.createElement('div');
+    
+    // Girasoles un poco más estilizados y menos gigantescos para evitar colisiones visuales
+    let dim = getRandomArbitrary(40, 65); 
     let leftPos = forcedLeft !== null ? forcedLeft : getSafeSafeHorizontalPos();
 
     flwr.classList.add('sunflwr');
@@ -57,27 +64,17 @@
                       <div class="sunflwr__pedal--11"></div>
                       <div class="sunflwr__pedal--12"></div>`;
     flwr.style.left = `${leftPos}vw`;
-    
-    let esCelular = window.innerWidth <= 600;
-    
-    if (esCelular) {
-      let dimCel = getRandomArbitrary(55, 75);
-      flwr.style.width = `${dimCel}vw`;
-      flwr.style.height = `${dimCel}vw`;
-      flwr.style.zIndex = Math.round(100 - dimCel);
-    } else {
-      let dimPC = getRandomArbitrary(35, 50);
-      flwr.style.width = `${dimPC}vmin`;
-      flwr.style.height = `${dimPC}vmin`;
-      flwr.style.zIndex = Math.round(100 - dimPC);
-    }
-    
-    flwr.style.filter = `saturate(${getRandomArbitrary(95, 100)}%) brightness(${getRandomArbitrary(95, 115)}%)`;
+    flwr.style.height = `${dim}vmin`;
+    flwr.style.width = `${dim}vmin`;
+    flwr.style.zIndex = Math.round(100 - dim);
+    flwr.style.filter = `saturate(${getRandomArbitrary(90, 100)}%) brightness(${getRandomArbitrary(95, 120)}%)`;
     document.body.appendChild(flwr);
   };
 
+  // Genera las primeras 4 flores bien espaciadas en la primera tanda
   const growInitialGarden = () => {
-    let initialPositions = [10, 35, 60, 85]; // Perfectamente distribuidos de lado a lado
+    // Posiciones balanceadas fijas a lo ancho de la pantalla para el arranque perfecto
+    let initialPositions = [12, 35, 58, 80]; 
     
     initialPositions.forEach((pos) => {
       globalPositions.push(pos);
@@ -90,6 +87,7 @@
     });
   };
 
+  // Acción del botón principal
   startBtn.addEventListener('click', (e) => {
     e.stopPropagation(); 
     
@@ -103,6 +101,7 @@
     gardenActive = true; 
   });
 
+  // Toques infinitos en la pantalla
   document.body.addEventListener('click', () => {
     if (gardenActive) {
       createSingleFlower(); 
