@@ -58,18 +58,23 @@
                       <div class="sunflwr__pedal--12"></div>`;
     flwr.style.left = `${leftPos}vw`;
     
-    // 📊 NUEVA FÓRMULA DE ALTURA Y TAMAÑO DINÁMICO
+    // 📊 ALTURA MÁXIMA EN CELULARES TOTALMENTE INCREMENTADA
     let esCelular = window.innerWidth <= 600;
     
-    // Incrementamos los rangos para que sean más grandes y notorios
-    let dim = esCelular ? getRandomArbitrary(50, 75) : getRandomArbitrary(45, 70);
+    if (esCelular) {
+      // En celular usamos un rango mucho más alto y variado (de 65% a 90% del ancho de pantalla)
+      let dimCel = getRandomArbitrary(65, 90);
+      flwr.style.width = `${dimCel}vw`;
+      flwr.style.height = `${dimCel}vw`;
+      flwr.style.zIndex = Math.round(100 - dimCel);
+    } else {
+      // En computadoras se mantiene el rango estético previo
+      let dimPC = getRandomArbitrary(45, 70);
+      flwr.style.width = `${dimPC}vmin`;
+      flwr.style.height = `${dimPC}vmin`;
+      flwr.style.zIndex = Math.round(100 - dimPC);
+    }
     
-    // Aplicamos la variación de escala al contenedor de la flor
-    flwr.style.width = esCelular ? `${dim}vw` : `${dim}vmin`;
-    flwr.style.height = esCelular ? `${dim}vw` : `${dim}vmin`;
-    
-    // El girasol más grande se dibuja al fondo (Z-Index) para dar profundidad de jardín
-    flwr.style.zIndex = Math.round(100 - dim);
     flwr.style.filter = `saturate(${getRandomArbitrary(95, 100)}%) brightness(${getRandomArbitrary(95, 115)}%)`;
     document.body.appendChild(flwr);
   };
