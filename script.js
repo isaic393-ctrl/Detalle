@@ -35,28 +35,62 @@
     return nuevaPos;
   }
 
-  const createSingleFlower = (forcedLeft = null) => {
-    let flwr = document.createElement('div');
+    const createSingleFlower = (forcedLeft = null) => {
     let leftPos = forcedLeft !== null ? forcedLeft : getSafeSafeHorizontalPos();
+    
+    // Configuración de tamaño común para ambas flores
+    let esCelular = window.innerWidth <= 600;
+    let dim = 0;
+    if (esCelular) {
+      dim = getRandomArbitrary(65, 90);
+    } else {
+      dim = getRandomArbitrary(45, 70);
+    }
+    let zIndex = Math.round(100 - dim);
+    let filtro = `saturate(${getRandomArbitrary(95, 100)}%) brightness(${getRandomArbitrary(95, 115)}%)`;
 
-    flwr.classList.add('sunflwr');
-    flwr.innerHTML = `<div class="sunflwr__leaf--left"></div>
+    // 🌻 1. FLOR DE ABAJO (La original)
+    let flwrBottom = document.createElement('div');
+    flwrBottom.classList.add('sunflwr');
+    flwrBottom.style.left = `${leftPos}vw`;
+    flwrBottom.style.width = esCelular ? `${dim}vw` : `${dim}vmin`;
+    flwrBottom.style.height = esCelular ? `${dim}vw` : `${dim}vmin`;
+    flwrBottom.style.zIndex = zIndex;
+    flwrBottom.style.filter = filtro;
+    
+    // Contenido de pétalos (se mantiene igual)
+    const petalHTML = `<div class="sunflwr__leaf--left"></div>
                       <div class="sunflwr__leaf--right"></div>
                       <div class="sunflwr__stem"></div>
                       <div class="sunflwr__center"></div>
-                      <div class="sunflwr__pedal--1"></div>
-                      <div class="sunflwr__pedal--2"></div>
-                      <div class="sunflwr__pedal--3"></div>
-                      <div class="sunflwr__pedal--4"></div>
-                      <div class="sunflwr__pedal--5"></div>
-                      <div class="sunflwr__pedal--6"></div>
-                      <div class="sunflwr__pedal--7"></div>
-                      <div class="sunflwr__pedal--8"></div>
-                      <div class="sunflwr__pedal--9"></div>
-                      <div class="sunflwr__pedal--10"></div>
-                      <div class="sunflwr__pedal--11"></div>
-                      <div class="sunflwr__pedal--12"></div>`;
-    flwr.style.left = `${leftPos}vw`;
+                      <div class="sunflwr__petal--1"></div>
+                      <div class="sunflwr__petal--2"></div>
+                      <div class="sunflwr__petal--3"></div>
+                      <div class="sunflwr__petal--4"></div>
+                      <div class="sunflwr__petal--5"></div>
+                      <div class="sunflwr__petal--6"></div>
+                      <div class="sunflwr__petal--7"></div>
+                      <div class="sunflwr__petal--8"></div>
+                      <div class="sunflwr__petal--9"></div>
+                      <div class="sunflwr__petal--10"></div>
+                      <div class="sunflwr__petal--11"></div>
+                      <div class="sunflwr__petal--12"></div>`;
+                      
+    flwrBottom.innerHTML = petalHTML;
+    document.body.appendChild(flwrBottom);
+
+    // 🌻 2. FLOR DE ARRIBA (La nueva gemela)
+    let flwrTop = document.createElement('div');
+    flwrTop.classList.add('sunflwr', 'sunflwr--top'); // 👈 Añadimos la clase espejo
+    flwrTop.style.left = `${leftPos}vw`;
+    flwrTop.style.width = esCelular ? `${dim}vw` : `${dim}vmin`;
+    flwrTop.style.height = esCelular ? `${dim}vw` : `${dim}vmin`;
+    flwrTop.style.zIndex = zIndex;
+    flwrTop.style.filter = filtro;
+    flwrTop.innerHTML = petalHTML;
+    document.body.appendChild(flwrTop);
+  };
+
     
     // 📊 ALTURA MÁXIMA EN CELULARES TOTALMENTE INCREMENTADA
     let esCelular = window.innerWidth <= 600;
