@@ -209,5 +209,51 @@ body {
   }
 }
 
+/* ==========================================
+   Efecto Espejo: Girasoles desde el Techo
+   ========================================== */
+
+/* Coloca el contenedor en el techo */
+.sunflwr--top {
+  top: 0 !important;
+  bottom: auto !important;
+}
+
+/* Invierte el tallo para que crezca hacia abajo */
+.sunflwr--top .sunflwr__stem {
+  top: 0% !important;
+  bottom: auto !important;
+}
+
+/* Mueve el centro y pétalos a la punta inferior del tallo */
+.sunflwr--top .sunflwr__center,
+.sunflwr--top .sunflwr__petal--1, 
+.sunflwr--top .sunflwr__petal--2, 
+.sunflwr--top .sunflwr__petal--3, 
+.sunflwr--top .sunflwr__petal--4, 
+.sunflwr--top .sunflwr__petal--5, 
+.sunflwr--top .sunflwr__petal--6,
+.sunflwr--top .sunflwr__petal--7, 
+.sunflwr--top .sunflwr__petal--8, 
+.sunflwr--top .sunflwr__petal--9, 
+.sunflwr--top .sunflwr__petal--10, 
+.sunflwr--top .sunflwr__petal--11, 
+.sunflwr--top .sunflwr__petal--12 {
+  top: 60% !important;
+}
+
+/* Mueve las hojas a la parte superior del tallo */
+.sunflwr--top .sunflwr__leaf--left {
+  top: 20% !important;
+}
+
+.sunflwr--top .sunflwr__leaf--right {
+  top: 30% !important;
+}
+
+/* Opcional: Añade un borde verde arriba en el diseño general */
+body {
+  border-top: 5vh #355E3B solid !important;
+}
 
 
