@@ -1,0 +1,210 @@
+@import url("https://googleapis.com");
+
+html {
+  height: 100vh;
+  margin: 0;
+  cursor: pointer;
+}
+
+body {
+  height: 100vh;
+  overflow: hidden;
+  border-bottom: 5vh #355E3B solid;
+  box-sizing: border-box;
+  position: relative;
+  transition: background 1s ease-in-out;
+}
+
+/* Fondo inicial: Negro limpio y fijo */
+.inicio-negro {
+  background: #000000;
+}
+
+/* Fondo final: Tu nueva paleta con degradado romántico, suave y limpio */
+.jardin-rosa {
+  background: linear-gradient(135deg, #fff5f6 0%, #ffe3e7 100%) !important;
+}
+
+/* Nueva animación tranquila y bonita para el texto (Color Café Chocolate Elegante) */
+.fade-in-text {
+  text-align: center;
+  color: #5c3a21; /* Cambiado a café chocolate para combinar con el centro del girasol */
+  font-family: "Montserrat Alternates", sans-serif;
+  font-size: 38px;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  top: 15vh;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(20px);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); /* Sombra suave de alta calidad */
+  animation: entradaSuave 2s 0.5s forwards ease-out;
+}
+
+@keyframes entradaSuave {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estructura base de los girasoles */
+.sunflwr {
+  width: 80vmin;
+  height: 80vmin;
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+
+.sunflwr__leaf--left, .sunflwr__leaf--right {
+  width: 0%;
+  height: 20%;
+  border-radius: 0% 50% 0% 50%;
+  position: absolute;
+  background: #228B22;
+  top: 70%;
+  left: 45%;
+  transform: translate(-100%, -50%) rotate(-20deg);
+  animation: sunflwr__leaf forwards 1.2s 0.4s ease-out;
+}
+
+.sunflwr__leaf--right {
+  top: 80%;
+  left: 55%;
+  transform: translate(0%, -50%) rotate(-70deg);
+}
+
+@keyframes sunflwr__leaf {
+  0% { width: 0%; border: 0px solid black; }
+  100% { width: 20%; border: 2px solid black; }
+}
+
+.sunflwr__stem {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 5%;
+  height: 60%;
+  background: #228B22;
+  left: 50%;
+  bottom: 0%;
+  border: 2px solid black;
+  animation: sunflwr__stem forwards 1.2s ease-out;
+}
+
+@keyframes sunflwr__stem {
+  0% { height: 0; }
+  100% { height: 60%; }
+}
+
+.sunflwr__center {
+  border-radius: 50%;
+  background-color: #654321;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  z-index: 2;
+  animation: sunflwr__center 1s 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes sunflwr__center {
+  0% { width: 0%; height: 0%; }
+  100% { width: 25%; height: 25%; }
+}
+
+.sunflwr__pedal--1, .sunflwr__pedal--7, .sunflwr__pedal--12, .sunflwr__pedal--11, .sunflwr__pedal--10, .sunflwr__pedal--9, .sunflwr__pedal--8, .sunflwr__pedal--6, .sunflwr__pedal--5, .sunflwr__pedal--4, .sunflwr__pedal--3, .sunflwr__pedal--2 {
+  border-radius: 50%;
+  background: #FFD700;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  animation: grow-pedal-back 1s 1.4s forwards ease-out;
+}
+
+.sunflwr__pedal--2 { transform: translate(-50%, -50%) rotate(30deg); }
+.sunflwr__pedal--3 { transform: translate(-50%, -50%) rotate(60deg); }
+.sunflwr__pedal--4 { transform: translate(-50%, -50%) rotate(90deg); }
+.sunflwr__pedal--5 { transform: translate(-50%, -50%) rotate(120deg); }
+.sunflwr__pedal--6 { transform: translate(-50%, -50%) rotate(150deg); }
+
+@keyframes grow-pedal-back {
+  0% { width: 0%; height: 0%; border: 0px solid black; }
+  100% { width: 15%; height: 45%; border: 2px solid black; }
+}
+
+.sunflwr__pedal--7, .sunflwr__pedal--12, .sunflwr__pedal--11, .sunflwr__pedal--10, .sunflwr__pedal--9, .sunflwr__pedal--8 {
+  border-radius: 20% 50% 20% 50%;
+  transform: translate(-50%, -50%) rotate(15deg);
+  animation: grow-pedal-front 1s 1.8s forwards ease-out;
+}
+
+.sunflwr__pedal--8 { transform: translate(-50%, -50%) rotate(45deg); }
+.sunflwr__pedal--9 { transform: translate(-50%, -50%) rotate(75deg); }
+.sunflwr__pedal--10 { transform: translate(-50%, -50%) rotate(105deg); }
+.sunflwr__pedal--11 { transform: translate(-50%, -50%) rotate(135deg); }
+.sunflwr__pedal--12 { transform: translate(-50%, -50%) rotate(165deg); }
+
+@keyframes grow-pedal-front {
+  0% { height: 0%; width: 0%; border: 0px solid black; }
+  100% { height: 35%; width: 10%; border: 2px solid black; }
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Botón Fosforecente Llamativo con animación de latido neón */
+#start-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 16px 40px;
+  font-size: 1.3rem;
+  background-color: #ccff00; /* Amarillo fosforecente eléctrico */
+  color: #000000;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  font-family: "Montserrat Alternates", sans-serif;
+  z-index: 999;
+  animation: latidoNeon 2s infinite ease-in-out;
+  transition: transform 0.2s;
+}
+
+@keyframes latidoNeon {
+  0%, 100% {
+    box-shadow: 0 0 20px #ccff00, 0 0 40px rgba(204, 255, 0, 0.5);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px #ccff00, 0 0 70px rgba(204, 255, 0, 0.8);
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+#start-btn:hover {
+  background-color: #d8ff33;
+}
+
+/* 📱 OPTIMIZACIÓN DE DISEÑO AUTOMÁTICO PARA CELULARES */
+@media (max-width: 600px) {
+  .fade-in-text {
+    font-size: 24px !important; /* Ajusta el poema para que no se salga de la pantalla */
+    top: 12vh !important;       /* Deja un buen espacio superior libre */
+    padding: 0 20px;            /* Evita que las letras peguen en las orillas */
+    line-height: 1.4;
+  }
+  .sunflwr {
+    width: 70vw !important;     /* Modifica ligeramente el tamaño en móvil para que luzca perfecto */
+    height: 70vw !important;
+  }
+}
