@@ -199,7 +199,7 @@ body {
 @media (max-width: 600px) {
   .fade-in-text {
     font-size: 24px !important; 
-    top: 40vh !important;       /* Bajado un 10% más para el ajuste perfecto en móvil */
+    top: 42vh !important;       /* Ubicación ideal: justo arriba de los girasoles en celular */
     padding: 0 20px;            
     line-height: 1.4;
   }
@@ -208,5 +208,6 @@ body {
     bottom: 2vh !important; 
   }
 }
+
 
 
