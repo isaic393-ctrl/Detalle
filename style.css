@@ -199,13 +199,14 @@ body {
 @media (max-width: 600px) {
   .fade-in-text {
     font-size: 24px !important; 
-    top: 12vh !important;       
+    top: 20vh !important;       /* Bajado estratégicamente en el celular */
     padding: 0 20px;            
     line-height: 1.4;
   }
   
   .sunflwr {
-    bottom: 2vh !important; /* Mantiene fijas las flores dentro del pasto en móvil */
+    bottom: 2vh !important; 
   }
 }
+
 
