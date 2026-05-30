@@ -9,25 +9,27 @@
     return Math.round(Math.random() * (max - min)) + min;
   }
 
+  // Permite conseguir posiciones repartidas a lo largo de TODA la pantalla (del 5% al 90% del ancho)
   function getSafeSafeHorizontalPos() {
     let intentos = 0;
     let posValida = false;
     let nuevaPos = 0;
 
     while (!posValida && intentos < 50) {
-      nuevaPos = getRandomArbitrary(8, 80);
+      nuevaPos = getRandomArbitrary(5, 90); // Rango ampliado para ocupar más pantalla
       posValida = true;
       intentos++;
 
+      // Tolerancia de separación para evitar que se encimen demasiado
       for (let i = 0; i < globalPositions.length; i++) {
-        if (nuevaPos > globalPositions[i] - 22 && nuevaPos < globalPositions[i] + 22) {
+        if (nuevaPos > globalPositions[i] - 15 && nuevaPos < globalPositions[i] + 15) {
           posValida = false;
           break;
         }
       }
     }
     
-    if (globalPositions.length > 5) {
+    if (globalPositions.length > 6) {
       globalPositions.shift(); 
     }
 
@@ -58,18 +60,17 @@
                       <div class="sunflwr__pedal--12"></div>`;
     flwr.style.left = `${leftPos}vw`;
     
-    // 📊 ALTURA MÁXIMA EN CELULARES TOTALMENTE INCREMENTADA
     let esCelular = window.innerWidth <= 600;
     
     if (esCelular) {
-      // En celular usamos un rango mucho más alto y variado (de 65% a 90% del ancho de pantalla)
-      let dimCel = getRandomArbitrary(65, 90);
+      // Ajuste de tamaño equilibrado para abarcar el ancho móvil
+      let dimCel = getRandomArbitrary(45, 65);
       flwr.style.width = `${dimCel}vw`;
       flwr.style.height = `${dimCel}vw`;
       flwr.style.zIndex = Math.round(100 - dimCel);
     } else {
-      // En computadoras se mantiene el rango estético previo
-      let dimPC = getRandomArbitrary(45, 70);
+      // Ajuste de tamaño en PC para que no salgan gigantescos y llenen armónicamente la pantalla
+      let dimPC = getRandomArbitrary(35, 50);
       flwr.style.width = `${dimPC}vmin`;
       flwr.style.height = `${dimPC}vmin`;
       flwr.style.zIndex = Math.round(100 - dimPC);
@@ -80,7 +81,8 @@
   };
 
   const growInitialGarden = () => {
-    let initialPositions = [12, 35, 58, 80]; 
+    // CORREGIDO: Coordenadas iniciales bien distribuidas de izquierda a derecha (10%, 35%, 60%, 85%)
+    let initialPositions = [10, 35, 60, 85]; 
     
     initialPositions.forEach((pos) => {
       globalPositions.push(pos);
